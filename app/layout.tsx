@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
+import { CartProvider } from "@/components/cart-provider";
 
 export const metadata: Metadata = {
   title: "NexaShop",
@@ -15,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className="bg-stone-50 text-zinc-900 antialiased">
-        {children}
+        <CartProvider>{children}</CartProvider>
       </body>
     </html>
   );

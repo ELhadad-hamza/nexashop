@@ -1,6 +1,7 @@
 import Navbar from "@/components/navbar";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
+import AddToCartButton from "@/components/add-to-cart-button";
 
 export default async function ShopPage() {
   const products = await prisma.product.findMany({
@@ -42,12 +43,24 @@ export default async function ShopPage() {
               <p className="mt-2 text-sm text-zinc-500">{product.description}</p>
               <p className="mt-3 text-xl font-bold">{product.price} DH</p>
 
-              <Link
-                href={`/product/${product.slug}`}
-                className="mt-4 block w-full rounded-full bg-zinc-900 px-4 py-2 text-center text-white hover:bg-zinc-800"
-              >
-                Voir le produit
-              </Link>
+              <div className="mt-4 flex justify-between gap-3">
+                <Link
+                  href={`/product/${product.slug}`}
+                  className="rounded-full border border-zinc-300 px-4 py-2 text-center text-sm hover:bg-white"
+                >
+                  Voir
+                </Link>
+
+                <AddToCartButton
+                  product={{
+                    id: product.id,
+                    name: product.name,
+                    slug: product.slug,
+                    price: product.price,
+                    imageUrl: product.imageUrl,
+                  }}
+                />
+              </div>
             </div>
           ))}
         </div>

@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
+import AddToCartButton from "@/components/add-to-cart-button";
 
 export default async function FeaturedProducts() {
   const products = await prisma.product.findMany({
@@ -45,15 +46,18 @@ export default async function FeaturedProducts() {
 
               <p className="text-sm text-zinc-500">{product.description}</p>
 
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-3">
                 <p className="text-xl font-bold">{product.price} DH</p>
 
-                <Link
-                  href={`/product/${product.slug}`}
-                  className="rounded-full bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800"
-                >
-                  Voir
-                </Link>
+                <AddToCartButton
+                  product={{
+                    id: product.id,
+                    name: product.name,
+                    slug: product.slug,
+                    price: product.price,
+                    imageUrl: product.imageUrl,
+                  }}
+                />
               </div>
             </div>
           </div>

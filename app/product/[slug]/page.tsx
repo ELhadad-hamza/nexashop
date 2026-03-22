@@ -1,6 +1,7 @@
 import Navbar from "@/components/navbar";
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
+import AddToCartButton from "@/components/add-to-cart-button";
 
 type ProductPageProps = {
   params: Promise<{
@@ -51,9 +52,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </div>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <button className="rounded-full bg-zinc-900 px-6 py-3 font-medium text-white hover:bg-zinc-800">
-                Ajouter au panier
-              </button>
+              <AddToCartButton
+                product={{
+                  id: product.id,
+                  name: product.name,
+                  slug: product.slug,
+                  price: product.price,
+                  imageUrl: product.imageUrl,
+                }}
+              />
 
               <button className="rounded-full border border-zinc-300 px-6 py-3 font-medium hover:bg-white">
                 Acheter maintenant
