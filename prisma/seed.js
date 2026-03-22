@@ -1,25 +1,46 @@
-const { PrismaClient } = require("@prisma/client");
+require("dotenv").config();
 
-const prisma = new PrismaClient();
+const { PrismaClient } = require("@prisma/client");
+const { PrismaPg } = require("@prisma/adapter-pg");
+
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL,
+});
+
+const prisma = new PrismaClient({
+  adapter,
+});
 
 async function main() {
   await prisma.product.deleteMany();
   await prisma.category.deleteMany();
 
   const sneakers = await prisma.category.create({
-    data: { name: "Sneakers", slug: "sneakers" },
+    data: {
+      name: "Sneakers",
+      slug: "sneakers",
+    },
   });
 
   const accessoires = await prisma.category.create({
-    data: { name: "Accessoires", slug: "accessoires" },
+    data: {
+      name: "Accessoires",
+      slug: "accessoires",
+    },
   });
 
   const sacs = await prisma.category.create({
-    data: { name: "Sacs", slug: "sacs" },
+    data: {
+      name: "Sacs",
+      slug: "sacs",
+    },
   });
 
   const vetements = await prisma.category.create({
-    data: { name: "Vêtements", slug: "vetements" },
+    data: {
+      name: "Vêtements",
+      slug: "vetements",
+    },
   });
 
   await prisma.product.createMany({
@@ -64,6 +85,26 @@ async function main() {
         imageUrl: null,
         categoryId: vetements.id,
       },
+      {
+        name: "Runner Pro",
+        slug: "runner-pro",
+        description: "Chaussures sportives légères et confortables.",
+        price: 799,
+        stock: 9,
+        isFeatured: false,
+        imageUrl: null,
+        categoryId: sneakers.id,
+      },
+      {
+        name: "Leather Wallet",
+        slug: "leather-wallet",
+        description: "Portefeuille sobre en simili cuir.",
+        price: 299,
+        stock: 18,
+        isFeatured: false,
+        imageUrl: null,
+        categoryId: accessoires.id,
+      },
     ],
   });
 
@@ -72,9 +113,9 @@ async function main() {
 
 main()
   .catch((e) => {
-    console.error(e);
+    console.error("Erreur seed :", e);
     process.exit(1);
   })
   .finally(async () => {
     await prisma.$disconnect();
-  });   
+  });
