@@ -1,4 +1,5 @@
 import Navbar from "@/components/navbar";
+import { loginAction } from "@/lib/auth-client";
 
 export default function LoginPage() {
   return (
@@ -11,10 +12,11 @@ export default function LoginPage() {
         <h1 className="text-4xl font-bold tracking-tight">Se connecter</h1>
 
         <div className="mt-8 rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
-          <form className="space-y-4">
+          <form className="space-y-4" action={loginAction}>
             <div>
               <label className="mb-2 block text-sm font-medium">Email</label>
               <input
+                name="email"
                 type="email"
                 placeholder="exemple@email.com"
                 className="w-full rounded-2xl border border-zinc-300 px-4 py-3 outline-none focus:border-zinc-500"
@@ -24,6 +26,7 @@ export default function LoginPage() {
             <div>
               <label className="mb-2 block text-sm font-medium">Mot de passe</label>
               <input
+                name="password"
                 type="password"
                 placeholder="********"
                 className="w-full rounded-2xl border border-zinc-300 px-4 py-3 outline-none focus:border-zinc-500"

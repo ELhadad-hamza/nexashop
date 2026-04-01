@@ -1,10 +1,10 @@
-"use client";
-
 import Link from "next/link";
-import { useCart } from "@/components/cart-provider";
+import { auth } from "@/auth";
+import LogoutButton from "@/components/logout-button";
+import NavbarCartIndicator from "@/components/navbar-cart-indicator";
 
-export default function Navbar() {
-  const { totalItems } = useCart();
+export default async function Navbar() {
+  const session = await auth();
 
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white/90 backdrop-blur">
@@ -22,25 +22,29 @@ export default function Navbar() {
             Boutique
           </Link>
 
-          <Link href="/cart" className="relative text-sm font-medium hover:text-zinc-600">
-            Panier
-            {totalItems > 0 && (
-              <span className="ml-2 rounded-full bg-zinc-900 px-2 py-1 text-xs text-white">
-                {totalItems}
+          <NavbarCartIndicator />
+
+          {session?.user ? (
+            <>
+              <span className="text-sm text-zinc-500">
+                Bonjour, {session.user.name}
               </span>
-            )}
-          </Link>
+              <LogoutButton />
+            </>
+          ) : (
+            <>
+              <Link href="/login" className="text-sm font-medium hover:text-zinc-600">
+                Connexion
+              </Link>
 
-          <Link href="/login" className="text-sm font-medium hover:text-zinc-600">
-            Connexion
-          </Link>
-
-          <Link
-            href="/register"
-            className="rounded-full bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800"
-          >
-            Inscription
-          </Link>
+              <Link
+                href="/register"
+                className="rounded-full bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800"
+              >
+                Inscription
+              </Link>
+            </>
+          )}
         </nav>
       </div>
     </header>
