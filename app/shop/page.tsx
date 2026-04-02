@@ -1,7 +1,6 @@
 import Navbar from "@/components/navbar";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
-import AddToCartButton from "@/components/add-to-cart-button";
 
 export default async function ShopPage() {
   const products = await prisma.product.findMany({
@@ -17,7 +16,9 @@ export default async function ShopPage() {
         <p className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">
           Boutique
         </p>
+
         <h1 className="text-4xl font-bold tracking-tight">Tous les produits</h1>
+
         <p className="mt-4 max-w-2xl text-zinc-600">
           Cette version lit les produits directement depuis PostgreSQL avec Prisma.
         </p>
@@ -29,7 +30,15 @@ export default async function ShopPage() {
               className="rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm"
             >
               <Link href={`/product/${product.slug}`}>
-                <div className="mb-4 h-48 rounded-2xl bg-gradient-to-br from-zinc-200 via-zinc-100 to-zinc-300" />
+                {product.imageUrl ? (
+                  <img
+                    src={product.imageUrl}
+                    alt={product.name}
+                    className="mb-4 h-48 w-full rounded-2xl object-cover"
+                  />
+                ) : (
+                  <div className="mb-4 h-48 rounded-2xl bg-gradient-to-br from-zinc-200 via-zinc-100 to-zinc-300" />
+                )}
               </Link>
 
               <p className="text-sm text-zinc-500">{product.category.name}</p>
@@ -41,6 +50,7 @@ export default async function ShopPage() {
               </Link>
 
               <p className="mt-2 text-sm text-zinc-500">{product.description}</p>
+
               <p className="mt-3 text-xl font-bold">{product.price} DH</p>
 
               <div className="mt-4 flex justify-between gap-3">
@@ -51,15 +61,12 @@ export default async function ShopPage() {
                   Voir
                 </Link>
 
-                <AddToCartButton
-                  product={{
-                    id: product.id,
-                    name: product.name,
-                    slug: product.slug,
-                    price: product.price,
-                    imageUrl: product.imageUrl,
-                  }}
-                />
+                <Link
+                  href={`/product/${product.slug}`}
+                  className="rounded-full bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800"
+                >
+                  Acheter
+                </Link>
               </div>
             </div>
           ))}
