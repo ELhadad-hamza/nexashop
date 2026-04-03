@@ -21,6 +21,9 @@ export default async function Navbar() {
           <Link href="/shop" className="text-sm font-medium hover:text-zinc-600">
             Boutique
           </Link>
+          <Link href="/account/orders" className="text-sm font-medium hover:text-zinc-600">
+  Mes commandes
+</Link>
 
           <NavbarCartIndicator />
 
@@ -33,6 +36,7 @@ export default async function Navbar() {
             </>
           ) : (
             <>
+            
               <Link href="/login" className="text-sm font-medium hover:text-zinc-600">
                 Connexion
               </Link>
@@ -43,6 +47,7 @@ export default async function Navbar() {
               >
                 Inscription
               </Link>
+              
             </>
           )}
         </nav>

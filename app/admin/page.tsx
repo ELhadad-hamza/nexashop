@@ -67,6 +67,12 @@ export default async function AdminPage() {
           >
             Ajouter un produit
           </Link>
+          <Link
+  href="/admin/orders"
+  className="rounded-full border border-zinc-300 px-6 py-3 font-medium hover:bg-white"
+>
+  Gérer les commandes
+</Link>
         </div>
       </section>
     </main>
