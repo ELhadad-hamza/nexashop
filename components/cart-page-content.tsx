@@ -89,9 +89,12 @@ export default function CartPageContent() {
           <span className="text-2xl font-bold">{totalPrice} DH</span>
         </div>
 
-        <button className="mt-6 w-full rounded-full bg-zinc-900 px-4 py-3 font-medium text-white hover:bg-zinc-800">
+        <Link
+          href="/checkout"
+          className="mt-6 block w-full rounded-full bg-zinc-900 px-4 py-3 text-center font-medium text-white hover:bg-zinc-800"
+        >
           Passer au checkout
-        </button>
+        </Link>
 
         <button
           onClick={clearCart}
